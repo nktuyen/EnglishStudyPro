@@ -346,6 +346,13 @@ namespace ESPA
                 txtCategoryName.Text = HierachicalName + "-" + RemoveTone(txtCategoryTitle.Text);
             else
                 txtCategoryName.Text = RemoveTone(txtCategoryTitle.Text);
+
+            if (Mode != EditorMode.None)
+            {
+                btnCategory_Save.Enabled = (txtCategoryName.Text.Length > 0 ||
+                    txtCategoryTitle.Text.Length > 0);
+            }
+
         }
 
         private void txtCategoryTitle_TextChanged(object sender, EventArgs e)

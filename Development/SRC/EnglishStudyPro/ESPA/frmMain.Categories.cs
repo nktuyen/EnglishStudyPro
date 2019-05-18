@@ -30,6 +30,7 @@ namespace ESPA
             cbCategories.Items.Clear();
             lbCategories.Items.Clear();
 
+            cbCategories.Items.Add(new ESPCategory());
             cbCategories.DisplayMember = "DisplayName";
             lbCategories.DisplayMember = "DisplayName";
             int level = -4;
@@ -59,10 +60,17 @@ namespace ESPA
 
             if(Mode == EditorMode.AddNew)
             {
-                var cates = DB.Categories.Where(e => e.Name == category.Name || e.Title == category.Title).FirstOrDefault();
+                var cates = DB.Categories.Where(e => e.Name == category.Name/* || e.Title == category.Title*/).FirstOrDefault();
                 if(null != cates)
                 {
                     MessageBox.Show("Already exist.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+
+                cates = DB.Categories.Where(e => e.Parent == category.Parent && (e.Name == category.Name || e.Title == category.Title)).FirstOrDefault();
+                if(null != cates)
+                {
+                    MessageBox.Show("Duplicate children.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
             }

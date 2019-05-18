@@ -15,7 +15,8 @@ namespace ESPA
 
             lbClasses.DisplayMember = "Title";
 
-            foreach(ESPClass cls in DB.Classes)
+            var clses = DB.Classes.OrderBy(e => e.Title);
+            foreach(ESPClass cls in clses)
             {
                 lbClasses.Items.Add(cls);
             }
